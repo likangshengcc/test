@@ -1,0 +1,3 @@
+/home/nvidia/test2/binocular_stereo/build/CMakeFiles/rebuild_cache.dir
+/home/nvidia/test2/binocular_stereo/build/CMakeFiles/Binocular_stereo.dir
+/home/nvidia/test2/binocular_stereo/build/CMakeFiles/edit_cache.dir
