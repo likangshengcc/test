@@ -500,7 +500,11 @@ float linear_regression_x(std::vector<SDL_CLOUD_DATA>& sdl_point_trans_set)
 	float sum_x = 0.0;
 	float mean_x= 0.0;
 
-	for(int i; i < sdl_point_trans_set.size(); i++)
+	if (sdl_point_trans_set.empty()) {
+		return 0.0f;
+	}
+
+	for(int i = 0; i < sdl_point_trans_set.size(); i++)
 	{
 		sum_x += sdl_point_trans_set[i].sdl_point_value.x;
 	}
@@ -513,7 +517,11 @@ float linear_regression_z(std::vector<SDL_CLOUD_DATA>& sdl_point_trans_set)
 	float sum_z = 0.0;
 	float mean_z= 0.0;
 
-	for(int i; i < sdl_point_trans_set.size(); i++)
+	if (sdl_point_trans_set.empty()) {
+		return 0.0f;
+	}
+
+	for(int i = 0; i < sdl_point_trans_set.size(); i++)
 	{
 		sum_z += sdl_point_trans_set[i].sdl_point_value.z;
 	}
@@ -532,19 +540,20 @@ void calcu_sdl(std::vector<SDL_CLOUD_DATA>& sdl_point_trans_in_set, float init_s
 	//innerx.clear(); innery.clear();
 
 	sdl_point_trans_set.clear();
-	vector<float> distances;
+	sdl_point_trans_set.reserve(sdl_point_trans_in_set.size());
 	printf("sdl_point_trans_in_set.size()=%d\n",sdl_point_trans_in_set.size());
 	for (int i = 0; i < sdl_point_trans_in_set.size(); i++)
 	{
 
 		float dis = fabs(sdl_point_trans_in_set[i].sdl_point_value.x - center_x);
-		distances.push_back(dis);
 		if (dis <= init_std)
 		{
 			sdl_point_trans_set.push_back(sdl_point_trans_in_set[i]);
 		}
 	}
-	center_x = linear_regression_x(sdl_point_trans_set);	
+	if (!sdl_point_trans_set.empty()) {
+		center_x = linear_regression_x(sdl_point_trans_set);
+	}
 }
 
 void calcu_sdl_z(std::vector<SDL_CLOUD_DATA>& sdl_point_trans_in_set, float init_std_z, float& center_z, std::vector<SDL_CLOUD_DATA>& sdl_point_trans_set )
@@ -553,19 +562,20 @@ void calcu_sdl_z(std::vector<SDL_CLOUD_DATA>& sdl_point_trans_in_set, float init
 	//innerx.clear(); innery.clear();
 
 	sdl_point_trans_set.clear();
-	vector<float> distances;
+	sdl_point_trans_set.reserve(sdl_point_trans_in_set.size());
 	printf("sdl_point_trans_in_set.size()=%d\n",sdl_point_trans_in_set.size());
 	for (int i = 0; i < sdl_point_trans_in_set.size(); i++)
 	{
 
 		float dis = fabs(sdl_point_trans_in_set[i].sdl_point_value.z - center_z);
-		distances.push_back(dis);
 		if (dis <= init_std_z)
 		{
 			sdl_point_trans_set.push_back(sdl_point_trans_in_set[i]);
 		}
 	}
-	center_z = linear_regression_z(sdl_point_trans_set);	
+	if (!sdl_point_trans_set.empty()) {
+		center_z = linear_regression_z(sdl_point_trans_set);
+	}
 }
 
 		
